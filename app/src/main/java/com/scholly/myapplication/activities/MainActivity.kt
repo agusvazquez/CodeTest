@@ -7,9 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scholly.myapplication.R
 import com.scholly.myapplication.adapter.MovieListAdapter
 import com.scholly.myapplication.model.Movie
+import com.scholly.myapplication.network.services.MovieService
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class MainActivity : AppCompatActivity() {
 
+    val movieService by lazy {
+        MovieService.create()
+    }
+    var disposable: Disposable? = null
 
     private val mNicolasCageMovies = listOf(
         Movie("Raising Arizona", 1987),
@@ -27,11 +35,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         initRecyclerView()
-        //loadData()
+        loadData()
     }
 
     private fun loadData() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        disposable =
+            movieService.getPopularMovies()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    { result -> showResult(result) },
+                    { error -> showError(error.message) }
+                )
+    }
+
+    private fun showResult(result: Movie?) {
+
+    }
+
+    private fun showError(error: String?) {
+
     }
 
     private fun initRecyclerView() {
@@ -43,6 +66,10 @@ class MainActivity : AppCompatActivity() {
             val adapter = MovieListAdapter(mNicolasCageMovies)
             recyclerView.setAdapter(adapter)
         }
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        disposable?.dispose()
     }
 }
