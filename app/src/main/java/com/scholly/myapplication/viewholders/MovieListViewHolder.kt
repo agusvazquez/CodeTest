@@ -1,14 +1,15 @@
 package com.scholly.myapplication.viewholders
 
-import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.scholly.myapplication.BuildConfig
 import com.scholly.myapplication.R
+import com.scholly.myapplication.listeners.RecyclerViewClickListener
 import com.scholly.myapplication.model.Movie
 import com.squareup.picasso.Picasso
 
@@ -26,7 +27,10 @@ class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         textTitle?.setTypeface(textTitle?.getTypeface(), Typeface.BOLD);
     }
 
-    fun bind(movie: Movie) {
+    fun bind(
+        movie: Movie,
+        itemListener: RecyclerViewClickListener
+    ) {
         textTitle?.text = movie.title
         textDescription?.text = movie.overview
 
@@ -35,5 +39,9 @@ class MovieListViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         Picasso.get()
             .load(imageUrl)
             .into(imageAvatar)
+
+        itemView.setOnClickListener(View.OnClickListener {
+            itemListener.recyclerViewListClicked(itemView, movie, imageAvatar)
+        })
     }
 }

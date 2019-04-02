@@ -1,13 +1,13 @@
 package com.scholly.myapplication.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.scholly.myapplication.listeners.RecyclerViewClickListener
 import com.scholly.myapplication.model.Movie
 import com.scholly.myapplication.viewholders.MovieListViewHolder
 
-class MovieListAdapter  (private val list: ArrayList<Movie>)
+class MovieListAdapter  (private val list: ArrayList<Movie>, private val itemListener: RecyclerViewClickListener)
     : RecyclerView.Adapter<MovieListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
@@ -17,7 +17,7 @@ class MovieListAdapter  (private val list: ArrayList<Movie>)
 
     override fun onBindViewHolder(holder: MovieListViewHolder, position: Int) {
         val movie: Movie = list[position]
-        holder.bind(movie)
+        holder.bind(movie, itemListener)
     }
 
     override fun getItemCount(): Int = list.size
