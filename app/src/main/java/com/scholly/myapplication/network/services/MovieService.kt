@@ -2,11 +2,13 @@ package com.scholly.myapplication.network.services
 
 import com.scholly.myapplication.BuildConfig
 import com.scholly.myapplication.model.Movie
+import com.scholly.myapplication.model.Page
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieService {
@@ -26,11 +28,11 @@ interface MovieService {
         }
     }
 
-    @GET("movies/get-popular-movies")
-    fun getPopularMovies():
-            Observable<Movie>
+    @GET("movie/popular")
+    fun getPopularMovies(@Query("api_key") apiKey: String):
+            Observable<Page>
 
-    @GET("movies/get-movie-details")
-    fun getMovieDetails(@Query("movie_id") movieId: String):
+    @GET("movie/{id}")
+    fun getMovieDetails(@Path("id") movieId: String, @Query("api_key") apiKey: String):
             Observable<Movie>
 }

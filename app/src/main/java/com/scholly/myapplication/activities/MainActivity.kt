@@ -1,12 +1,15 @@
 package com.scholly.myapplication.activities
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.scholly.myapplication.BuildConfig
 import com.scholly.myapplication.R
 import com.scholly.myapplication.adapter.MovieListAdapter
 import com.scholly.myapplication.model.Movie
+import com.scholly.myapplication.model.Page
 import com.scholly.myapplication.network.services.MovieService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadData() {
         disposable =
-            movieService.getPopularMovies()
+            movieService.getPopularMovies(BuildConfig.MOVIEDB_API_KEY)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
@@ -49,8 +52,8 @@ class MainActivity : AppCompatActivity() {
                 )
     }
 
-    private fun showResult(result: Movie?) {
-
+    private fun showResult(result: Page?) {
+        Log.e("TEST", result.toString())
     }
 
     private fun showError(error: String?) {
