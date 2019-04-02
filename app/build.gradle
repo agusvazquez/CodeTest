@@ -14,8 +14,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField 'String', "API_URL", "https://developers.themoviedb.org/3/"
-        buildConfigField 'String', "MOVIEDB_API_KEY", "c8a7f290c86fa23177ce90d85d886581"
+        buildConfigField "String", "API_URL", '"https://api.themoviedb.org/"'
+        buildConfigField "String", "MOVIEDB_API_KEY", '"c8a7f290c86fa23177ce90d85d886581"'
     }
     buildTypes {
         release {
@@ -36,5 +36,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation "com.squareup.retrofit2:converter-gson:2.5.0"
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 }

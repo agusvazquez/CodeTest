@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scholly.myapplication.model.Movie
 import com.scholly.myapplication.viewholders.MovieListViewHolder
 
-class MovieListAdapter  (private val list: List<Movie>)
+class MovieListAdapter  (private val list: ArrayList<Movie>)
     : RecyclerView.Adapter<MovieListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListViewHolder {
@@ -21,4 +21,14 @@ class MovieListAdapter  (private val list: List<Movie>)
 
     override fun getItemCount(): Int = list.size
 
+    fun addAll(movies: List<Movie>) {
+        for (movie in movies) {
+            add(movie)
+        }
+    }
+
+    private fun add(response: Movie) {
+        list.add(response)
+        notifyItemInserted(list.size - 1)
+    }
 }
